@@ -12,7 +12,7 @@ def init():
 
 def run(data):
     try:
-        data = pd.DataFrame(json.loads(data)['data'])
+        data = pd.DataFrame.from_dict(json.loads(data)['data'])
         result = model.predict(data)
         return result.tolist()
     except Exception as e:
