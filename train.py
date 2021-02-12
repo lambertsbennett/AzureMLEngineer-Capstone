@@ -21,6 +21,7 @@ run = Run.get_context()
 def process_data(data):
     x_df = data.to_pandas_dataframe().dropna()
     y_df = x_df.pop("Class")
+    y_df = pd.to_numeric(y_df, errors='coerce')
     return x_df, y_df
 
 # Drop NAs and encode data.
@@ -39,7 +40,7 @@ def main():
 
     args = parser.parse_args()
 
-    run.log("Regularization Strength:", np.int(args.num_estimators))
+    run.log("Number of Estimators:", np.int(args.num_estimators))
     run.log("Max iterations:", np.int(args.max_depth))
 
     model = RandomForestClassifier(num_estimators=args.num_estimators, max_depth=args.max_depth).fit(x_train, y_train)
