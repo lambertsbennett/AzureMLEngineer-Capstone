@@ -45,7 +45,8 @@ def main():
     model = RandomForestClassifier(num_estimators=args.num_estimators, max_depth=args.max_depth).fit(x_train, y_train)
 
     roc_auc = roc_auc_score(model.predict(x_test), y_test)
-    run.log("Accuracy", np.float(roc_auc))
+    run.log("ROC_AUC", np.float(roc_auc))
 
 if __name__ == '__main__':
     main()
+
