@@ -7,25 +7,20 @@ import joblib
 from sklearn.model_selection import train_test_split
 import pandas as pd
 from azureml.core.run import Run
+from azureml.core import Workspace, Dataset
 
-key = "cc-fraud"
-description_text = "Credit card fraud dataset from Kaggle."
-
-try:
-    dataset = ws.datasets[key]
-except:
-    print("Dataset not found in Azure datasets.")
+ws = Workspace.from_config()
+dataset = Dataset.get_by_name(ws, name='cc-fraud')
 
 run = Run.get_context()
 
 def process_data(data):
     x_df = data.to_pandas_dataframe().dropna()
     y_df = x_df.pop("Class")
-    y_df = pd.to_numeric(y_df, errors='coerce')
     return x_df, y_df
 
 # Drop NAs and encode data.
-x, y = process_data(ds)
+x, y = process_data(dataset)
 
 #Split data into train and test sets.
 x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.33)
