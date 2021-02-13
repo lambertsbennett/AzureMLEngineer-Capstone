@@ -30,15 +30,15 @@ def main():
     # Add arguments to script
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--num_estimators', type=int, default=100, help="Number of trees in the forest.")
+    parser.add_argument('--n_estimators', type=int, default=100, help="Number of trees in the forest.")
     parser.add_argument('--max_depth', type=int, default=None, help="Maximum depth of tree.")
 
     args = parser.parse_args()
 
-    run.log("Number of Estimators:", np.int(args.num_estimators))
+    run.log("Number of Estimators:", np.int(args.n_estimators))
     run.log("Max iterations:", np.int(args.max_depth))
 
-    model = RandomForestClassifier(num_estimators=args.num_estimators, max_depth=args.max_depth).fit(x_train, y_train)
+    model = RandomForestClassifier(n_estimators=args.n_estimators, max_depth=args.max_depth).fit(x_train, y_train)
 
     roc_auc = roc_auc_score(model.predict(x_test), y_test)
     run.log("ROC_AUC", np.float(roc_auc))
