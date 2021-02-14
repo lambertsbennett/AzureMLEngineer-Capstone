@@ -7,12 +7,11 @@ import joblib
 from sklearn.model_selection import train_test_split
 import pandas as pd
 from azureml.core.run import Run
-from azureml.core import Workspace, Dataset
 
-ws = Workspace.from_config()
-dataset = Dataset.get_by_name(ws, name='cc-fraud')
 
 run = Run.get_context()
+
+dataset = run.input_datasets['cc-fraud']
 
 def process_data(data):
     x_df = data.to_pandas_dataframe().dropna()
