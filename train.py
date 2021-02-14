@@ -6,23 +6,17 @@ from sklearn.metrics import roc_auc_score
 import joblib
 from sklearn.model_selection import train_test_split
 import pandas as pd
+from azureml.core import Dataset
 from azureml.core.run import Run
 
 
 run = Run.get_context()
-
-dataset = run.input_datasets['cc-fraud']
+ws = run.experiment.workspace
 
 def process_data(data):
     x_df = data.to_pandas_dataframe().dropna()
     y_df = x_df.pop("Class")
     return x_df, y_df
-
-# Drop NAs and encode data.
-x, y = process_data(dataset)
-
-#Split data into train and test sets.
-x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.33)
     
 
 def main():
@@ -31,8 +25,17 @@ def main():
 
     parser.add_argument('--n_estimators', type=int, default=100, help="Number of trees in the forest.")
     parser.add_argument('--max_depth', type=int, default=None, help="Maximum depth of tree.")
+    parser.add_argument('--input_data', type=str)
 
     args = parser.parse_args()
+
+    dataset = Dataset.get_by_id(ws, id=args.input_data)
+
+    # Drop NAs and encode data.
+    x, y = process_data(dataset)
+
+    #Split data into train and test sets.
+    x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.33)
 
     run.log("Number of Estimators:", np.int(args.n_estimators))
     run.log("Max iterations:", np.int(args.max_depth))
