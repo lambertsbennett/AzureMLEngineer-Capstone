@@ -1,6 +1,6 @@
 # Detecting credit card fraud via machine learning
 
-*TODO:* Write a short introduction to your project.
+My capstone project for Udacity's Machine Learning Engineer Nanodegree focuses on detecting instances of credit card fraud. The objective of this project falls into the category of anomaly detection, where classification is attempted on a dataset with highly imbalanced class distribution. In the case of the dataset used here instances of fraud account for only 0.172% of all instances.
 
 ## Project Set Up and Installation
 *OPTIONAL:* If your project has any special installation steps, this is where you should put it. To turn this project into a professional portfolio project, you are encouraged to explain how to set up this project in AzureML.
