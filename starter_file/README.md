@@ -7,10 +7,10 @@ My capstone project for Udacity's Machine Learning Engineer Nanodegree focuses o
 The dataset used in this project is the openly available Kaggle credit card fraud dataset (https://www.kaggle.com/mlg-ulb/creditcardfraud). This dataset consists of the results of a PCA transformation on the original credit card transaction data. PCA was carried out to protect sensitive information present in the original data. In addition to the principle coordinates the data contains the time since the first transaction that was logged and the amount (in $) of the transaction. It is a binary classification problem where the positive label (1) corresponds to an instance of fraud and the negative label (0) is a normal transaction. The dataset is highly imbalanced with very few instances of fraud present.
 
 ### Task
-*TODO*: Explain the task you are going to be solving with this dataset and the features you will be using for it.
+The objective of this project is to classify samples as either 'normal' or 'fraudulent' transactions. In order to do this I will use all available features present in the dataset. 
 
 ### Access
-*TODO*: Explain how you are accessing the data in your workspace.
+In order to access the Kaggle dataset, I downloaded the compressed dataset, extracted it, and registered it as a dataset in my Azure workspace. From this point I programmatically interact with it through the SDK.
 
 ## Automated ML
 *TODO*: Give an overview of the `automl` settings and configuration you used for this experiment
