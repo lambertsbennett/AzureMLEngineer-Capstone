@@ -32,10 +32,6 @@ I chose Random Forests as the model to tune with Hyperdrive. Random Forests are 
 *TODO* Remeber to provide screenshots of the `RunDetails` widget as well as a screenshot of the best model trained with it's parameters.
 
 ## Model Deployment
+As both model selection approaches yielded models with similar AUC (>0.99), I decided to deploy the automl model. The model was deployed as an Azure Container Instance. To query the model data is serialized to JSON and sent to the model's endpoint as an http request. For an example of code used to interact with the deployed model please see the 'Model Deployment' section of the automl notebook (automl.ipynb).
 *TODO*: Give an overview of the deployed model and instructions on how to query the endpoint with a sample input.
 
-## Screen Recording
-*TODO* Provide a link to a screen recording of the project in action. Remember that the screencast should demonstrate:
-- A working model
-- Demo of the deployed  model
-- Demo of a sample request sent to the endpoint and its response
