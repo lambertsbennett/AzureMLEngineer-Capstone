@@ -49,7 +49,7 @@ Important here is that the deployment status is 'healthy' and there is an endpoi
 
 Sample data passed to the model:
 
-´´´
+```python
 data = {"data":
         [ 
           {
@@ -118,15 +118,17 @@ data = {"data":
           },
         ]   
       }
-´´´
+```
 Using this data it can be serialized to JSON as follows and sent as an HTTP request.
-´´´
+
+```python
 input_data = json.dumps(data)
 
 headers = {'Content-Type': 'application/json'}
 
 resp = requests.post(scoring_uri, input_data, headers=headers)
-´´´
+```
+
 Here the scoring URI is unique to the model container and can be found in the 'endpoints' section of ML studio.
 
 As a response, the model will send back a list of predictions. In this case they will be '0' for normal transaction or '1' for fraud.
