@@ -15,7 +15,7 @@ The dataset used in this project is the openly available Kaggle credit card frau
 The objective of this project is to classify samples as either 'normal' or 'fraudulent' transactions. In order to do this I will use all available features present in the dataset. 
 
 ### Access
-In order to access the Kaggle dataset, I downloaded the compressed dataset, extracted it, and registered it as a dataset in my Azure workspace. From this point I programmatically interacted with it through the SDK.
+In order to access the Kaggle dataset, I downloaded the compressed dataset, extracted it, and registered it as a dataset in my Azure workspace using the Azure ML Studio GUI. From this point I programmatically interacted with it through the SDK.
 
 ## Automated ML
 For the automated ML run, I chose to limit the experiment to a total duration of 1 hr to reduce the potential for session timeout. The primary metric that I used as an objective for the autoML run was weighted AUC (area under the curve), which is the suggested metric for anomaly detection in the Azure documentation. AUC accounts for precision and recall of both classes and allows accurate characterisation of the performance of a model on an imbalanced dataset.
