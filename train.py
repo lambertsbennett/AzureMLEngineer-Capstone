@@ -45,6 +45,8 @@ def main():
     roc_auc = roc_auc_score(model.predict(x_test), y_test)
     run.log("auc", np.float(roc_auc))
 
+    joblib.dump(model, 'model.joblib')
+
 if __name__ == '__main__':
     main()
 
