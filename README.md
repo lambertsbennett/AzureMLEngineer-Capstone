@@ -5,7 +5,7 @@ My capstone project for Udacity's Machine Learning Engineer Nanodegree focuses o
 
 In order to approach this problem, I made use of both Azure's automated ML capabilities and Azure's Hyperdrive hyperparameter tuning tool. The best models from each experiment were compared to find the most performant model and the best model was then deployed as an Azure container instance for consumption. Both automated ML and Hyperdrive produced models with very good performance as assessed by Area Under the Curve (AUC), a metric that is particularly useful for model evaluation when classes are imbalanced. Both models had an AUC of >0.99 indicating good performance for the credit card fraud dataset used as training data. The kaggle dataset used for training (discussed in more detail below) consists of PCA transformed data, which unfortunately limits the applicability of my trained model, but the process was a great learning experience.
 
-*See a video outlining model training, deployment, and interaction [here](https://www.youtube.com/watch?v=fYjMvYzxGKk&ab_channel=BennettLambert).*
+*See a video outlining model training, deployment, and interaction [here](https://www.youtube.com/watch?v=stLGRwPTz80&ab_channel=BennettLambert).*
 
 ## Dataset
 ### Overview
