@@ -137,3 +137,5 @@ Here the scoring URI is unique to the model container and can be found in the 'e
 As a response, the model will send back a list of predictions. In this case they will be '0' for normal transaction or '1' for fraud.
 ![Response from the deployed model.](images/Endpoint-response.png)
 
+## Future Work
+
