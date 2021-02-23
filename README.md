@@ -10,7 +10,7 @@
 - [AutoML](https://github.com/lambertsbennett/AzureMLEngineer-Capstone#automated-ml)
     - [Results](https://github.com/lambertsbennett/AzureMLEngineer-Capstone#results)
 - [Hyperparameter tuning](https://github.com/lambertsbennett/AzureMLEngineer-Capstone#hyperparameter-tuning)
-    - [Results](https://github.com/lambertsbennett/AzureMLEngineer-Capstone#results)
+    - [Results](https://github.com/lambertsbennett/AzureMLEngineer-Capstone#run-results)
 - [Model Deployment](https://github.com/lambertsbennett/AzureMLEngineer-Capstone#model-deployment)
 - [Future Work](https://github.com/lambertsbennett/AzureMLEngineer-Capstone#future-work)
 
@@ -52,7 +52,7 @@ During the tuning process, the RunDetails widget again is very useful to keep tr
 ![Run details for our Hyperdrive tuning run](images/Hyperdrive-runwidget.png)
 
 
-### Results
+### Run Results
 The best model obtained from Hyperdrive had an AUC of ~0.99. This model has 716 estimators, with a maximum depth of 16. This performance is comparable to that of the automl run. To improve this in the future a longer Hyperdrive run could be used. Currently the number of runs that could be carried out with Hyperdrive is limited by the VM's time limits. Another potential way to improve the model's performance in the future would be to take the top models produced by Hyperdrive and repeat the process with a narrowed parameters space (if possible).
 
 After the Hyperdrive run, the best model can be quickly summarized programmatically.
