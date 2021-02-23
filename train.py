@@ -46,7 +46,7 @@ def main():
     run.log("auc", np.float(roc_auc))
     
     os.makedirs('outputs', exist_ok=True)
-    joblib.dump(model, 'outputs/model.joblib')
+    joblib.dump(value=model, filename='outputs/model.pkl')
 
 if __name__ == '__main__':
     main()

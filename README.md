@@ -1,5 +1,20 @@
 # Detecting credit card fraud via machine learning
 
+
+## Table of Contents
+- [Project Overview](https://github.com/lambertsbennett/AzureMLEngineer-Capstone#project-overview)
+- [Dataset](https://github.com/lambertsbennett/AzureMLEngineer-Capstone#dataset)
+    - [Overview](https://github.com/lambertsbennett/AzureMLEngineer-Capstone#overview)
+    - [Task](https://github.com/lambertsbennett/AzureMLEngineer-Capstone#task)
+    - [Access](https://github.com/lambertsbennett/AzureMLEngineer-Capstone#overview)
+- [AutoML](https://github.com/lambertsbennett/AzureMLEngineer-Capstone#automated-ml)
+    - [Results](https://github.com/lambertsbennett/AzureMLEngineer-Capstone#results)
+- [Hyperparameter tuning](https://github.com/lambertsbennett/AzureMLEngineer-Capstone#hyperparameter-tuning)
+    - [Results](https://github.com/lambertsbennett/AzureMLEngineer-Capstone#results)
+- [Model Deployment](https://github.com/lambertsbennett/AzureMLEngineer-Capstone#model-deployment)
+- [Future Work](https://github.com/lambertsbennett/AzureMLEngineer-Capstone#future-work)
+
+
 ## Project Overview
 My capstone project for Udacity's Machine Learning Engineer Nanodegree focuses on detecting instances of credit card fraud. The objective of this project falls into the category of anomaly detection, where classification is attempted on a dataset with a highly imbalanced distribution of classes. In the case of the dataset used here instances of fraud account for only 0.172% of all instances. Anomaly detection is a fascinating area of machine learning that often requires special techniques and care in interpretation compared to other machine learning use cases. 
 
@@ -9,7 +24,7 @@ In order to approach this problem, I made use of both Azure's automated ML capab
 
 ## Dataset
 ### Overview
-The dataset used in this project is the openly available Kaggle credit card fraud dataset (https://www.kaggle.com/mlg-ulb/creditcardfraud). This dataset consists of the results of a PCA transformation on the original credit card transaction data. PCA was carried out to protect sensitive information present in the original data. In addition to the principle coordinates the data contains the time since the first transaction that was logged and the amount (in $) of the transaction. It is a binary classification problem where the positive label (1) corresponds to an instance of fraud and the negative label (0) is a normal transaction. The dataset is highly imbalanced with very few instances of fraud present.
+The dataset used in this project is the openly available Kaggle credit card fraud [dataset](https://www.kaggle.com/mlg-ulb/creditcardfraud). This dataset consists of the results of a PCA transformation on the original credit card transaction data. PCA was carried out to protect sensitive information present in the original data. In addition to the principle coordinates the data contains the time since the first transaction that was logged and the amount (in $) of the transaction. It is a binary classification problem where the positive label (1) corresponds to an instance of fraud and the negative label (0) is a normal transaction. The dataset is highly imbalanced with very few instances of fraud present.
 
 ### Task
 The objective of this project is to classify samples as either 'normal' or 'fraudulent' transactions. In order to do this I will use all available features present in the dataset. 
@@ -21,7 +36,7 @@ In order to access the Kaggle dataset, I downloaded the compressed dataset, extr
 For the automated ML run, I chose to limit the experiment to a total duration of 1 hr to reduce the potential for session timeout. The primary metric that I used as an objective for the autoML run was weighted AUC (area under the curve), which is the suggested metric for anomaly detection in the Azure documentation. AUC accounts for precision and recall of both classes and allows accurate characterisation of the performance of a model on an imbalanced dataset.
 
 As the run progresses, details can be viewed via the RunDetails widget:
-![The run details for our automl run](images/Automl-runwidget.png)
+![The run details for our automl run](images/automl-widget-updated.png)
 
 ### Results
 The best model from the automl process was a voting ensemble model. The model had an AUC of ~0.99 and other precision/recall metrics were all >0.97 indicating a model that performed well at the classification task. However, when I spoofed transactions the model did not accurately identify these transactions as fraud. This was surprising as the data was generated at random and had no relation to the output of PCA that was carried out on the original dataset. Examining the model explanation, two of the principle coordinates were the most important features for identifying instances of fraud. However, when I altered those features (even to extreme values) the model continued to classify transactions as normal. While these features are very important to the model, the model is incorporating information from all features in a non-trivial way making it difficult to understand the factors directly influencing decision making in the model. In the future I would run automl for a longer period in hopes that a more performant model would arise. If not, I would investigate further the factors influencing model decisions in an effort to better understand when the model is skilled at identifying fraud and instances where the model breaks down.
@@ -45,6 +60,10 @@ After the Hyperdrive run, the best model can be quickly summarized programmatica
 
 ## Model Deployment
 As both model selection approaches yielded models with similar AUC (>0.99), I decided to deploy the automl model. The model was deployed as an Azure Container Instance. To query the model data is serialized to JSON and sent to the model's endpoint as an http request. For an example of code used to interact with the deployed model please see the 'Model Deployment' section of the automl notebook (automl.ipynb).
+
+The inference configuration used for deployment simply points to the scoring script (score.py), which receives and unpacks the data submitted as JSON. The data is then converted into a Pandas dataframe, NaN values are dropped, and the model is applied to generate predictions.
+
+The ACI configuration specifies that the model will run on a single core with 1gb of memory available to run the scoring script and underlying processes in the container. I selected these values for the demonstration as 1gb should be more than enough memory given that we are sending small test requests to the model and a single core is sufficient for these purposes as well. 
 
 After model deployment, you can check on the status of the deployment under the endpoints tab. You should see something like the following:
 ![Active endpoint](images/model-deployment.png).
@@ -138,4 +157,6 @@ As a response, the model will send back a list of predictions. In this case they
 ![Response from the deployed model.](images/Endpoint-response.png)
 
 ## Future Work
+Although both Hyperdrive and AutoML produced models with great metric values (AUC > 0.99), there are still many avenues to strive for improvement. In the case of AutoML, the deployed model did not identify the data that I fabricated as anomalous. This could be a chance occurrence, related to the relatively high dimensionality of the input dataset, or be inherent in the difficulty of identifying anomalous data points in a dataset with diverse transactions and no means to link transactions to individual consumers. In the future, longer AutoML runs may still improve model performance by exploring more potential model configurations.
 
+Furthermore, I would like to explore the performance of Hyperdrive using different parameter sampling policies and stopping criteria. Random parameter sampling is effective over a large number of samples, but it might be that Bayesian sampling would converge to a performant model faster. 
